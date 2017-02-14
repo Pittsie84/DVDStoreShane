@@ -48,12 +48,12 @@
                     <f:selectItem itemLabel="R" itemValue="R" />
                     <f:selectItem itemLabel="NC-17" itemValue="NC-17" />
                 </h:selectOneMenu>
-                <h:outputText value="#{filmActorController.response}" />
+                <h:outputText value="" />
             </h:panelGrid>
             <h:commandButton id="submit" value="Submit" action="film" />
             <h:commandButton value="Clear" type="reset" />                           
         </h:form>
-        <h:outputText escape="false" value=" " />
+        <h:outputText escape="false" value="#{filmActorController.response}" />
     </ui:define>
 
 </ui:composition>

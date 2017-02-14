@@ -149,7 +149,7 @@ public class FilmActorHelper {
 
         List<Film> filmList = null;
 
-        String sql = "select * from film order by last_update decs limit 1";
+        String sql = "select * from film order by last_update desc limit 1";
 
         try {
             // if current transaction isn't active, begin one
@@ -188,7 +188,7 @@ public class FilmActorHelper {
             q.addEntity(FilmActor.class);
 
             q.setParameter("actorId", actor);
-            q.setParameter("description", film);
+            q.setParameter("filmId", film);
             q.setParameter("update", timeStamp);
 
             result = q.executeUpdate();
@@ -220,7 +220,7 @@ public class FilmActorHelper {
             q.addEntity(FilmCategory.class);
 
             q.setParameter("categoryId", category);
-            q.setParameter("description", film);
+            q.setParameter("filmId", film);
             q.setParameter("update", timeStamp);
 
             result = q.executeUpdate();
