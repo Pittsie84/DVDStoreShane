@@ -23,6 +23,14 @@ public class FilmController implements Serializable {
 
     private int recordCount;
     private int pageSize = 10;
+    
+    //Field used to get selected movie from index page
+    private Film selected;
+    
+    // compeonents of the browse.xhtml
+    String language;
+    String actors;
+    String category;
 
     /**
      * Creates a new instance of FilmController
@@ -79,4 +87,71 @@ public class FilmController implements Serializable {
         this.pageSize = pageSize;
     }
 
+    // returns true when next values are possible
+    public boolean isHasNextPage(){
+        if (startId + pageSize < recordCount){
+            return true;
+        }
+        return false;
+    }
+    
+    // returns true when there are previous values
+    public boolean isHasPreviousPage(){
+        if (startId - pageSize > 0){
+            return true;
+        }
+        return false;
+    }
+
+    public Film getSelected() {
+        if (selected == null){
+            selected = new Film();
+        }
+        return selected;
+    }
+
+    public void setSelected(Film selected) {
+        this.selected = selected;
+    }
+
+    public String getLanguage() {
+        int langId = selected.getLanguageByLanguageId().getLanguageId().intValue();
+        language = helper.getLangByID(langId);
+        return language;
+    }
+
+    public void setLanguage(String language) {
+        this.language = language;
+    }
+
+    public String getActors() {
+        List actors = helper.getActorsByID(selected.getFilmId());
+        StringBuilder cast = new StringBuilder();
+        for(int i = 0; i < actors.size(); i++){
+            Actor actor = (Actor) actors.get(i);
+            cast.append(actor.getFirstName());
+            cast.append(" ");
+            cast.append(actor.getLastName());
+            cast.append(" ");
+        }
+        return cast.toString();
+    }
+
+    public void setActors(String actors) {
+        this.actors = actors;
+    }
+
+    public String getCategory() {
+        Category category = helper.getCategoryByID(selected.getFilmId());
+        return category.getName();
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+    
+    public String prepareView(){
+        selected = (Film) getFilmTitles().getRowData();
+        return "browse";
+    }
 }
